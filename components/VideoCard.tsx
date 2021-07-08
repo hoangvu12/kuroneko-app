@@ -7,7 +7,8 @@ import { VideoCardProps } from "../types";
 
 const { width } = Dimensions.get("window");
 
-export const CardWidth = width * 0.6;
+export const CardPadding = 10;
+export const CardWidth = width * 0.5 - CardPadding;
 
 const VideoCard = (props: VideoCardProps) => {
   const { image, title, studios } = props;
@@ -34,17 +35,21 @@ const VideoCard = (props: VideoCardProps) => {
 export default VideoCard;
 
 const styles = StyleSheet.create({
-  container: { width: CardWidth, marginRight: 13 },
+  container: {
+    width: CardWidth,
+    marginRight: CardPadding,
+    marginBottom: 15,
+  },
   thumbnail: {
-    marginBottom: 10,
+    marginBottom: 5,
     resizeMode: "cover",
   },
   title: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
   },
   studios: {
-    fontSize: 16,
+    fontSize: 14,
     color: "gray",
   },
 });

@@ -23,6 +23,7 @@ export default function Category(props: CategoryProps) {
         data={videos}
         renderItem={handleRenderItem}
         showsHorizontalScrollIndicator={false}
+        keyExtractor={(item) => item.slug}
       />
     </View>
   );
@@ -36,12 +37,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   title: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "bold",
   },
   updatedAt: {
-    fontWeight: "500",
+    fontWeight: "400",
     color: "gray",
-    fontSize: 18,
+    fontSize: 16,
   },
 });

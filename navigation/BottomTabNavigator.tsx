@@ -11,8 +11,8 @@ import * as React from "react";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import HomeScreen from "../screens/HomeScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
-import { BottomTabParamList, HomeParamList, TabTwoParamList } from "../types";
+import CategoryScreen from "../screens/CategoryScreen";
+import { BottomTabParamList, HomeParamList, CategoryParamList } from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -21,7 +21,7 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Home"
       tabBarOptions={{
         activeTintColor: Colors[colorScheme].tabIconSelected,
         showLabel: false,
@@ -37,8 +37,8 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
+        name="Category"
+        component={CategoryNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="md-menu-outline" color={color} />
@@ -70,12 +70,12 @@ function HomeNavigator() {
   );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+const CategoryStack = createStackNavigator<CategoryParamList>();
 
-function TabTwoNavigator() {
+function CategoryNavigator() {
   return (
-    <TabTwoStack.Navigator screenOptions={{ headerShown: false }}>
-      <TabTwoStack.Screen name="TabTwoScreen" component={TabTwoScreen} />
-    </TabTwoStack.Navigator>
+    <CategoryStack.Navigator screenOptions={{ headerShown: false }}>
+      <CategoryStack.Screen name="CategoryScreen" component={CategoryScreen} />
+    </CategoryStack.Navigator>
   );
 }

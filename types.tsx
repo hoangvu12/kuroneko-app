@@ -14,6 +14,7 @@ export type VideoCardProps = {
   slug: string;
   title: string;
   studios: string[];
+  containerStyle: StyleSheet;
 };
 
 export type RootStackParamList = {
@@ -22,14 +23,14 @@ export type RootStackParamList = {
 };
 
 export type BottomTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
+  Home: undefined;
+  Category: undefined;
 };
 
 export type HomeParamList = {
   HomeScreen: undefined;
 };
 
-export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+export type CategoryParamList = {
+  CategoryScreen: undefined;
 };
