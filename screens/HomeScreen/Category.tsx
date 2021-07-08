@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, FlatList } from "react-native";
 
 import { Text, View } from "../../components/Themed";
-import VideoCard, { CardWidth } from "../../components/VideoCard";
+import VideoCard from "../../components/VideoCard";
 import { CategoryProps, VideoCardProps } from "../../types";
 
 export default function Category(props: CategoryProps) {

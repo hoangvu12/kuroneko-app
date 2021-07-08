@@ -1,9 +1,5 @@
 import * as React from "react";
-import { StyleSheet, FlatList } from "react-native";
-
 import { ScrollView } from "../../components/Themed";
-import VideoCard from "../../components/VideoCard";
-
 import { data } from "../../data/videos.json";
 import Category from "./Category";
 

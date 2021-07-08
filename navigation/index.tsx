@@ -10,12 +10,16 @@ import {
 } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { ColorSchemeName } from "react-native";
+import { Image, ColorSchemeName, TouchableOpacity } from "react-native";
+import { EvilIcons } from "@expo/vector-icons";
+// import Image from "react-native-scalable-image";
 
 import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList } from "../types";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
+import useColorScheme from "../hooks/useColorScheme";
+import Colors from "../constants/Colors";
 
 export default function Navigation({
   colorScheme,
@@ -36,11 +40,39 @@ export default function Navigation({
 // Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
 
+const LogoTitle: React.FC<{}> = () => {
+  return (
+    <Image
+      style={{ width: 60, height: 30 }}
+      // eslint-disable-next-line no-undef
+      source={require("../images/icon.png")}
+    />
+  );
+};
+
 function RootNavigator() {
+  const colorScheme = useColorScheme();
+  const colors = Colors[colorScheme];
+
   return (
     <Stack.Navigator
       initialRouteName="Root"
-      screenOptions={{ headerShown: false }}
+      screenOptions={({ navigation }) => ({
+        headerStyle: {
+          backgroundColor: colors.headerBackground,
+        },
+        headerTintColor: colors.tint,
+        headerRight: () => (
+          <TouchableOpacity
+            style={{ marginRight: 10 }}
+            onPress={() => navigation.navigate("Search")}
+          >
+            <EvilIcons name="search" size={30} color={colors.tint} />
+          </TouchableOpacity>
+        ),
+        headerTitle: (props) => <LogoTitle {...props} />,
+        cardStyle: { backgroundColor: colors.background },
+      })}
     >
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen
