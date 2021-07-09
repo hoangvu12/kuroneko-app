@@ -15,9 +15,12 @@ export default function useCachedResources() {
         // Load fonts
         await Font.loadAsync({
           ...Ionicons.font,
-          'netflix': require('../assets/fonts/NetflixSansRegular.ttf'),
-          'netflix-thin': require('../assets/fonts/NetflixSansThin.ttf'),
-          'netflix-light': require('../assets/fonts/NetflixSansLight.ttf')
+          'roboto': require('../assets/fonts/Roboto-Regular.ttf'),
+          "roboto-thin": require('../assets/fonts/Roboto-Thin.ttf'),
+          "roboto-bold": require('../assets/fonts/Roboto-Bold.ttf'),
+          "roboto-medium": require('../assets/fonts/Roboto-Medium.ttf'),
+          "roboto-light": require('../assets/fonts/Roboto-Light.ttf'),
+          "roboto-black": require('../assets/fonts/Roboto-Black.ttf'),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service

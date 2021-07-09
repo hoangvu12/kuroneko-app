@@ -13,6 +13,7 @@ import useColorScheme from "../hooks/useColorScheme";
 import HomeScreen from "../screens/HomeScreen";
 import CategoryScreen from "../screens/CategoryScreen";
 import { BottomTabParamList, HomeParamList, CategoryParamList } from "../types";
+import WatchScreen from "../screens/WatchScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 

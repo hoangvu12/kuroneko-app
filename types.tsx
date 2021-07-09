@@ -3,6 +3,16 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
+import { TextStyle } from "react-native";
+
+export type VideoPlayerProps = {
+  source: string;
+  topTitleText?: string;
+  topTitleStyle?: TextStyle;
+  topDescriptionText?: string;
+  topDescriptionStyle?: TextStyle;
+};
+
 export type CategoryProps = {
   title: string;
   updatedAt: string;
@@ -19,6 +29,7 @@ export type VideoCardProps = {
 
 export type RootStackParamList = {
   Root: undefined;
+  WatchScreen: undefined;
   NotFound: undefined;
 };
 

@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet } from "react-native";
 import Image from "react-native-scalable-image";
 import { VideoCardProps } from "../types";
 import { moderateScale } from "../utils/scale";
-import { LightText, ThinText, View } from "./Themed";
+import { View, Text, MediumText, LightText } from "./Themed";
 
 const { width } = Dimensions.get("window");
 
@@ -22,12 +22,12 @@ const VideoCard = (props: VideoCardProps) => {
         width={CardWidth}
         style={styles.thumbnail}
       />
-      <LightText numberOfLines={1} style={styles.title}>
+      <MediumText numberOfLines={1} style={styles.title}>
         {title}
-      </LightText>
-      <ThinText numberOfLines={1} style={styles.studios}>
+      </MediumText>
+      <LightText numberOfLines={1} style={styles.studios}>
         {studios.join(", ")}
-      </ThinText>
+      </LightText>
     </View>
   );
 };

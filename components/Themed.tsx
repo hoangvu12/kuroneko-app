@@ -36,13 +36,25 @@ export type TextProps = ThemeProps & DefaultText["props"];
 export type ViewProps = ThemeProps & DefaultView["props"];
 export type ScrollViewProps = ThemeProps & DefaultScrollView["props"];
 
+export function MediumText(props: TextProps) {
+  const { style, lightColor, darkColor, ...otherProps } = props;
+  const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
+
+  return (
+    <DefaultText
+      style={[{ color }, style, { fontFamily: "roboto-medium" }]}
+      {...otherProps}
+    />
+  );
+}
+
 export function ThinText(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
 
   return (
     <DefaultText
-      style={[{ color }, style, { fontFamily: "netflix-thin" }]}
+      style={[{ color }, style, { fontFamily: "roboto-thin" }]}
       {...otherProps}
     />
   );
@@ -54,7 +66,7 @@ export function LightText(props: TextProps) {
 
   return (
     <DefaultText
-      style={[{ color }, style, { fontFamily: "netflix-light" }]}
+      style={[{ color }, style, { fontFamily: "roboto-light" }]}
       {...otherProps}
     />
   );
@@ -66,7 +78,7 @@ export function Text(props: TextProps) {
 
   return (
     <DefaultText
-      style={[{ color }, style, { fontFamily: "netflix" }]}
+      style={[{ color }, style, { fontFamily: "roboto" }]}
       {...otherProps}
     />
   );

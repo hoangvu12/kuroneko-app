@@ -20,6 +20,7 @@ import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
 import useColorScheme from "../hooks/useColorScheme";
 import Colors from "../constants/Colors";
+import WatchScreen from "../screens/WatchScreen";
 
 export default function Navigation({
   colorScheme,
@@ -56,7 +57,7 @@ function RootNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="Root"
+      initialRouteName="WatchScreen"
       screenOptions={({ navigation }) => ({
         headerStyle: {
           backgroundColor: colors.headerBackground,
@@ -74,6 +75,11 @@ function RootNavigator() {
         cardStyle: { backgroundColor: colors.background },
       })}
     >
+      <Stack.Screen
+        name="WatchScreen"
+        component={WatchScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen
         name="NotFound"

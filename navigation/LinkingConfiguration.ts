@@ -10,12 +10,13 @@ export default {
   prefixes: [Linking.makeUrl('/')],
   config: {
     screens: {
+      WatchScreen: "watch",
       Root: {
         screens: {
           Home: {
             screens: {
               HomeScreen: 'home',
-            },
+            }
           },
           Category: {
             screens: {
