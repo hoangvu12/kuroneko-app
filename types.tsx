@@ -3,7 +3,14 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
+import { AVPlaybackStatus, Video } from "expo-av";
 import { TextStyle } from "react-native";
+
+export type VideoButtonProps = {
+  icon: JSX.Element;
+  onPress: () => void;
+  disabled?: boolean;
+};
 
 export type VideoPlayerProps = {
   source: string;
@@ -11,6 +18,13 @@ export type VideoPlayerProps = {
   topTitleStyle?: TextStyle;
   topDescriptionText?: string;
   topDescriptionStyle?: TextStyle;
+  isSkipBackDisabled?: boolean;
+  isSkipForwardDisabled?: boolean;
+  onSkipBackPress?: (status: AVPlaybackStatus, video: Video) => void;
+  onPlayBackPress?: (status: AVPlaybackStatus, video: Video) => void;
+  onPlayPress?: (status: AVPlaybackStatus, video: Video) => void;
+  onPlayForwardPress?: (status: AVPlaybackStatus, video: Video) => void;
+  onSkipForwardPress?: (status: AVPlaybackStatus, video: Video) => void;
 };
 
 export type CategoryProps = {
