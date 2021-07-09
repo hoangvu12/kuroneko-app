@@ -1,9 +1,9 @@
 import React from "react";
-import { StyleSheet, Dimensions } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import Image from "react-native-scalable-image";
-import { Text, View } from "./Themed";
-
 import { VideoCardProps } from "../types";
+import { moderateScale } from "../utils/scale";
+import { LightText, ThinText, View } from "./Themed";
 
 const { width } = Dimensions.get("window");
 
@@ -22,12 +22,12 @@ const VideoCard = (props: VideoCardProps) => {
         width={CardWidth}
         style={styles.thumbnail}
       />
-      <Text numberOfLines={2} style={styles.title}>
+      <LightText numberOfLines={1} style={styles.title}>
         {title}
-      </Text>
-      <Text numberOfLines={1} style={styles.studios}>
+      </LightText>
+      <ThinText numberOfLines={1} style={styles.studios}>
         {studios.join(", ")}
-      </Text>
+      </ThinText>
     </View>
   );
 };
@@ -45,11 +45,11 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   title: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     fontWeight: "bold",
   },
   studios: {
-    fontSize: 14,
+    fontSize: moderateScale(14),
     color: "gray",
   },
 });

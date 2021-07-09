@@ -4,6 +4,7 @@ import { StyleSheet, FlatList } from "react-native";
 import { Text, View } from "../../components/Themed";
 import VideoCard from "../../components/VideoCard";
 import { CategoryProps, VideoCardProps } from "../../types";
+import { moderateScale } from "../../utils/scale";
 
 export default function Category(props: CategoryProps) {
   const { title, updatedAt, videos } = props;
@@ -37,12 +38,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   title: {
-    fontSize: 20,
+    fontSize: moderateScale(20),
     fontWeight: "bold",
   },
   updatedAt: {
     fontWeight: "400",
     color: "gray",
-    fontSize: 16,
+    fontSize: moderateScale(16),
   },
 });

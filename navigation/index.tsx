@@ -43,7 +43,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 const LogoTitle: React.FC<{}> = () => {
   return (
     <Image
-      style={{ width: 60, height: 30 }}
+      style={{ width: 40, height: 30 }}
       // eslint-disable-next-line no-undef
       source={require("../images/icon.png")}
     />

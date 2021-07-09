@@ -36,11 +36,40 @@ export type TextProps = ThemeProps & DefaultText["props"];
 export type ViewProps = ThemeProps & DefaultView["props"];
 export type ScrollViewProps = ThemeProps & DefaultScrollView["props"];
 
+export function ThinText(props: TextProps) {
+  const { style, lightColor, darkColor, ...otherProps } = props;
+  const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
+
+  return (
+    <DefaultText
+      style={[{ color }, style, { fontFamily: "netflix-thin" }]}
+      {...otherProps}
+    />
+  );
+}
+
+export function LightText(props: TextProps) {
+  const { style, lightColor, darkColor, ...otherProps } = props;
+  const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
+
+  return (
+    <DefaultText
+      style={[{ color }, style, { fontFamily: "netflix-light" }]}
+      {...otherProps}
+    />
+  );
+}
+
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
 
-  return <DefaultText style={[{ color }, style]} {...otherProps} />;
+  return (
+    <DefaultText
+      style={[{ color }, style, { fontFamily: "netflix" }]}
+      {...otherProps}
+    />
+  );
 }
 
 export function View(props: ViewProps) {
