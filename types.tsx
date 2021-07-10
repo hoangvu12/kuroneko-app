@@ -12,6 +12,11 @@ export type VideoButtonProps = {
   disabled?: boolean;
 };
 
+export type VideoPlayerButtonPress = (
+  status: AVPlaybackStatus,
+  video: Video
+) => void;
+
 export type VideoPlayerProps = {
   source: string;
   topTitleText?: string;
@@ -20,11 +25,11 @@ export type VideoPlayerProps = {
   topDescriptionStyle?: TextStyle;
   isSkipBackDisabled?: boolean;
   isSkipForwardDisabled?: boolean;
-  onSkipBackPress?: (status: AVPlaybackStatus, video: Video) => void;
-  onPlayBackPress?: (status: AVPlaybackStatus, video: Video) => void;
-  onPlayPress?: (status: AVPlaybackStatus, video: Video) => void;
-  onPlayForwardPress?: (status: AVPlaybackStatus, video: Video) => void;
-  onSkipForwardPress?: (status: AVPlaybackStatus, video: Video) => void;
+  onSkipBackPress?: VideoPlayerButtonPress;
+  onPlayBackPress?: VideoPlayerButtonPress;
+  onPlayPress?: VideoPlayerButtonPress;
+  onPlayForwardPress?: VideoPlayerButtonPress;
+  onSkipForwardPress?: VideoPlayerButtonPress;
 };
 
 export type CategoryProps = {

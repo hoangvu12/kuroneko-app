@@ -13,7 +13,7 @@ import * as ScreenOrientation from "expo-screen-orientation";
 import { useNavigation } from "@react-navigation/native";
 
 import { LightText, Text } from "../../components/Themed";
-import { VideoPlayerProps } from "../../types";
+import { VideoPlayerButtonPress, VideoPlayerProps } from "../../types";
 import { parseTime } from "../../utils";
 import { moderateScale } from "../../utils/scale";
 import Colors from "../../constants/Colors";
@@ -42,6 +42,35 @@ const FullscreenExitIcon = () => (
   <MaterialCommunityIcons name="fullscreen-exit" size={24} color="white" />
 );
 
+const DEFAULT_onPlayBackPress = (
+  status: AVPlaybackStatus,
+  video: ExpoVideo
+): void => {
+  video.setPositionAsync(status.positionMillis - 10000);
+};
+
+const DEFAULT_onPlayPress = (
+  status: AVPlaybackStatus,
+  video: ExpoVideo
+): void => {
+  status.isPlaying ? video.pauseAsync() : video.playAsync();
+};
+
+const DEFAULT_onPlayForwardPress = (
+  status: AVPlaybackStatus,
+  video: ExpoVideo
+): void => {
+  video.setPositionAsync(status.positionMillis + 10000);
+};
+
+const DEFAULT_videoStatus: AVPlaybackStatus = {
+  isLoaded: false,
+  durationMillis: 0,
+  positionMillis: 0,
+  isPlaying: false,
+  isBuffering: false,
+};
+
 function Video(props: VideoPlayerProps) {
   const {
     source,
@@ -49,31 +78,30 @@ function Video(props: VideoPlayerProps) {
     topTitleStyle,
     topDescriptionText,
     topDescriptionStyle,
-    onPlayBackPress = (status, video) => {
-      video.setPositionAsync(status.positionMillis - 10000);
-    },
-    onPlayPress = (status, video) => {
-      status.isPlaying ? video.pauseAsync() : video.playAsync();
-    },
-    onPlayForwardPress = (status, video) => {
-      video.setPositionAsync(status.positionMillis + 10000);
-    },
+    onPlayBackPress = DEFAULT_onPlayBackPress,
+    onPlayPress = DEFAULT_onPlayPress,
+    onPlayForwardPress = DEFAULT_onPlayForwardPress,
   } = props;
 
   const orientation = useOrientation();
   const navigation = useNavigation();
 
   const videoRef = useRef<ExpoVideo>(null);
-  const [videoStatus, setVideoStatus] = useState<AVPlaybackStatus>({});
+  const [videoStatus, setVideoStatus] =
+    useState<AVPlaybackStatus>(DEFAULT_videoStatus);
   const [showControls, setShowControls] = useState<Boolean>(true);
 
   const handleSlideDrag = async (value: number): Promise<void> => {
-    await videoRef.current.setPositionAsync(value);
-    videoRef.current.playAsync();
+    await videoRef.current?.setPositionAsync(value);
+    videoRef.current?.playAsync();
   };
 
   const handleOverlayPress = () => {
     setShowControls(!showControls);
+  };
+
+  const handleVideoButtonPress = (fn: VideoPlayerButtonPress) => {
+    return () => fn(videoStatus, videoRef.current!);
   };
 
   const handleFullscreenPress = () => {
@@ -159,7 +187,7 @@ function Video(props: VideoPlayerProps) {
             <View style={styles.middleRightContainer}>
               <VideoButton
                 icon={<PlayBackIcon />}
-                onPress={() => onPlayBackPress(videoStatus, videoRef.current)}
+                onPress={handleVideoButtonPress(onPlayBackPress)}
               />
               <VideoButton
                 icon={
@@ -174,13 +202,11 @@ function Video(props: VideoPlayerProps) {
                     <PlayIcon />
                   )
                 }
-                onPress={() => onPlayPress(videoStatus, videoRef.current)}
+                onPress={handleVideoButtonPress(onPlayPress)}
               />
               <VideoButton
                 icon={<PlayForwardIcon />}
-                onPress={() =>
-                  onPlayForwardPress(videoStatus, videoRef.current)
-                }
+                onPress={handleVideoButtonPress(onPlayForwardPress)}
               />
             </View>
           </View>
