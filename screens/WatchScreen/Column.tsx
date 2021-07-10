@@ -20,7 +20,7 @@ export const ColumnWidth = windowWidth * 0.9;
 
 const styles = StyleSheet.create({
   container: {
-    width: ColumnWidth,
+    minWidth: ColumnWidth,
     padding: 12,
   },
 });

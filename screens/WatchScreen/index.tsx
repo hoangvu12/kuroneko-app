@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, FlatList, Dimensions } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -11,6 +11,10 @@ import Column from "./Column";
 import { data } from "../../data/video.json";
 import { moderateScale } from "../../utils/scale";
 import Label from "./Label";
+import { VideoCardProps } from "../../types";
+import VideoCard from "../../components/VideoCard";
+
+const { width: windowWidth } = Dimensions.get("window");
 
 const SAMPLE_VIDEO =
   "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
@@ -21,6 +25,12 @@ const LikeIcon = () => (
 const DislikeIcon = () => (
   <Ionicons name="ios-heart-dislike-outline" size={24} color="white" />
 );
+
+const handleRenderItem = ({ item }: { item: VideoCardProps }) => (
+  <VideoCard {...item} />
+);
+
+const keyExtractor = (item: VideoCardProps) => item.slug;
 
 export default function WatchScreen() {
   const orientation = useOrientation();
@@ -84,6 +94,20 @@ export default function WatchScreen() {
               </Label.Container>
             </View>
           </Column>
+
+          <Column>
+            <Text style={[styles.title, { paddingVertical: 5 }]}>
+              Video liên quan
+            </Text>
+
+            <FlatList
+              data={data.related}
+              renderItem={handleRenderItem}
+              numColumns={2}
+              keyExtractor={keyExtractor}
+              key="related-videos"
+            />
+          </Column>
         </ScrollView>
       </View>
     </View>
@@ -103,6 +127,7 @@ const styles = StyleSheet.create({
   },
   infoColumn: {
     flex: 1,
+    maxWidth: windowWidth * 0.9,
   },
   title: {
     fontSize: moderateScale(20),

@@ -32,7 +32,7 @@ const VideoCard = (props: VideoCardProps) => {
   );
 };
 
-export default VideoCard;
+export default React.memo(VideoCard);
 
 const styles = StyleSheet.create({
   container: {

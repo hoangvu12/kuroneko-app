@@ -43,7 +43,7 @@ export type VideoCardProps = {
   slug: string;
   title: string;
   studios: string[];
-  containerStyle: StyleSheet;
+  containerStyle?: StyleSheet;
 };
 
 export type RootStackParamList = {
