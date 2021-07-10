@@ -12,8 +12,6 @@ const SAMPLE_VIDEO =
 export default function WatchScreen() {
   const orientation = useOrientation();
 
-  console.log(orientation);
-
   return (
     <View style={styles.container}>
       <StatusBar hidden />
@@ -42,7 +40,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   playerContainer: {
-    flex: 1,
+    width: "100%",
+    aspectRatio: 16 / 9,
   },
   infoContainer: {
     flex: 2,

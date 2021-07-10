@@ -20,74 +20,35 @@ import Colors from "../../constants/Colors";
 import VideoButton from "./VideoButton";
 import useOrientation from "../../hooks/useOrientation";
 
-type IconProps = {
-  disabled?: boolean;
-};
-
 const BackIcon = () => (
   <Ionicons name="ios-chevron-back-outline" size={30} color="white" />
 );
 const DownIcon = () => (
   <Entypo name="chevron-small-down" size={32} color="white" />
 );
-const SkipBackIcon = ({ disabled = false }: IconProps) => (
-  <Ionicons
-    name="play-skip-back-outline"
-    size={30}
-    color={disabled ? "gray" : "white"}
-  />
+const PlayIcon = () => <Ionicons name="play" size={50} color="white" />;
+const PauseIcon = () => <Ionicons name="pause" size={50} color="white" />;
+const PlayBackIcon = () => (
+  <Ionicons name="play-back-outline" size={30} color="white" />
 );
-const SkipForwardIcon = ({ disabled = false }: IconProps) => (
-  <Ionicons
-    name="play-skip-forward-outline"
-    size={30}
-    color={disabled ? "gray" : "white"}
-  />
-);
-const PlayIcon = ({ disabled = false }: IconProps) => (
-  <Ionicons name="play" size={50} color={disabled ? "gray" : "white"} />
-);
-const PauseIcon = ({ disabled = false }: IconProps) => (
-  <Ionicons name="pause" size={50} color={disabled ? "gray" : "white"} />
-);
-const PlayBackIcon = ({ disabled = false }: IconProps) => (
-  <Ionicons
-    name="play-back-outline"
-    size={30}
-    color={disabled ? "gray" : "white"}
-  />
-);
-const PlayForwardIcon = ({ disabled = false }: IconProps) => (
-  <Ionicons
-    name="play-forward-outline"
-    size={30}
-    color={disabled ? "gray" : "white"}
-  />
+const PlayForwardIcon = () => (
+  <Ionicons name="play-forward-outline" size={30} color="white" />
 );
 
-const FullscreenIcon = ({ disabled = false }: IconProps) => (
-  <MaterialCommunityIcons
-    name="fullscreen"
-    size={24}
-    color={disabled ? "gray" : "white"}
-  />
+const FullscreenIcon = () => (
+  <MaterialCommunityIcons name="fullscreen" size={24} color="white" />
 );
-const FullscreenExitIcon = ({ disabled = false }: IconProps) => (
-  <MaterialCommunityIcons
-    name="fullscreen-exit"
-    size={24}
-    color={disabled ? "gray" : "white"}
-  />
+const FullscreenExitIcon = () => (
+  <MaterialCommunityIcons name="fullscreen-exit" size={24} color="white" />
 );
 
-export default function Video(props: VideoPlayerProps) {
+function Video(props: VideoPlayerProps) {
   const {
     source,
     topTitleText,
     topTitleStyle,
     topDescriptionText,
     topDescriptionStyle,
-    onSkipBackPress = (status, video) => {},
     onPlayBackPress = (status, video) => {
       video.setPositionAsync(status.positionMillis - 10000);
     },
@@ -97,9 +58,6 @@ export default function Video(props: VideoPlayerProps) {
     onPlayForwardPress = (status, video) => {
       video.setPositionAsync(status.positionMillis + 10000);
     },
-    onSkipForwardPress = (status, video) => {},
-    isSkipBackDisabled = false,
-    isSkipForwardDisabled = false,
   } = props;
 
   const orientation = useOrientation();
@@ -200,11 +158,6 @@ export default function Video(props: VideoPlayerProps) {
           <View style={styles.middleContainer}>
             <View style={styles.middleRightContainer}>
               <VideoButton
-                icon={<SkipBackIcon disabled={isSkipBackDisabled} />}
-                disabled={isSkipBackDisabled}
-                onPress={() => onSkipBackPress(videoStatus, videoRef.current)}
-              />
-              <VideoButton
                 icon={<PlayBackIcon />}
                 onPress={() => onPlayBackPress(videoStatus, videoRef.current)}
               />
@@ -227,13 +180,6 @@ export default function Video(props: VideoPlayerProps) {
                 icon={<PlayForwardIcon />}
                 onPress={() =>
                   onPlayForwardPress(videoStatus, videoRef.current)
-                }
-              />
-              <VideoButton
-                disabled={isSkipForwardDisabled}
-                icon={<SkipForwardIcon disabled={isSkipForwardDisabled} />}
-                onPress={() =>
-                  onSkipForwardPress(videoStatus, videoRef.current)
                 }
               />
             </View>
@@ -277,10 +223,12 @@ export default function Video(props: VideoPlayerProps) {
   );
 }
 
+export default React.memo(Video);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: "relative",
+    // position: "relative",
   },
   player: {
     width: "100%",
