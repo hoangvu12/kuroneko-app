@@ -151,6 +151,7 @@ function Video(props: VideoPlayerProps) {
           {/* Top */}
           <View style={styles.topContainer}>
             <View style={styles.leftTopContainer}>
+              {/* Back button */}
               <VideoButton
                 icon={orientation === "LANDSCAPE" ? <DownIcon /> : <BackIcon />}
                 onPress={() => {
@@ -185,10 +186,13 @@ function Video(props: VideoPlayerProps) {
           {/* Middle */}
           <View style={styles.middleContainer}>
             <View style={styles.middleRightContainer}>
+              {/* Play back button */}
               <VideoButton
                 icon={<PlayBackIcon />}
                 onPress={handleVideoButtonPress(onPlayBackPress)}
               />
+
+              {/* Play button */}
               <VideoButton
                 icon={
                   videoStatus.isBuffering && !videoStatus.isPlaying ? (
@@ -204,6 +208,8 @@ function Video(props: VideoPlayerProps) {
                 }
                 onPress={handleVideoButtonPress(onPlayPress)}
               />
+
+              {/* Play forward button */}
               <VideoButton
                 icon={<PlayForwardIcon />}
                 onPress={handleVideoButtonPress(onPlayForwardPress)}
@@ -219,6 +225,7 @@ function Video(props: VideoPlayerProps) {
                 {parseTime(videoStatus.durationMillis)}
               </Text>
 
+              {/* Fullscreen button */}
               <VideoButton
                 icon={
                   orientation === "LANDSCAPE" ? (
@@ -231,6 +238,7 @@ function Video(props: VideoPlayerProps) {
               />
             </View>
             <View style={styles.sliderContainer}>
+              {/* Slider */}
               <Slider
                 style={styles.slider}
                 minimumValue={0}
