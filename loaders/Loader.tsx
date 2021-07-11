@@ -28,6 +28,10 @@ export function mergeLayouts(...layouts: any[]): ICustomViewStyle[] {
   return layouts.flat();
 }
 
+export function mergeClass(...classnames: any[]) {
+  return Object.assign({}, ...classnames);
+}
+
 export function randomKey(key: string): string {
   const randomStr = Math.random().toString(36).substr(2, 5);
 

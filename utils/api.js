@@ -14,6 +14,12 @@ export const getCategory = async (categorySlug) => {
   return doRequest(URL);
 };
 
+export const getVideo = async (animeSlug) => {
+  const URL = `${BASE_URL}/${animeSlug}`;
+
+  return doRequest(URL);
+};
+
 const doRequest = async (URL) => {
   const { data } = await axios.get(URL);
 

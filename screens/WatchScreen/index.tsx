@@ -1,4 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
+import { RouteProp, useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
@@ -8,16 +10,32 @@ import { ScrollView, Text } from "../../components/Themed";
 import VideoCard, { CardHeight } from "../../components/VideoCard";
 import { data } from "../../data/video.json";
 import useOrientation from "../../hooks/useOrientation";
-import { VideoCardProps } from "../../types";
+import Loader from "../../loaders/Loader";
+import {
+  RootStackParamList,
+  VideoCardProperties,
+  VideoCardProps,
+} from "../../types";
 import { moderateScale } from "../../utils/scale";
 import Column from "./Column";
 import Label from "./Label";
+import useAnimeVideo from "./useAnimeVideo";
 import Video from "./Video";
 
-const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
+import WatchScreenLoader from "../../loaders/WatchScreenLoader";
 
-const SAMPLE_VIDEO =
-  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+const { width: windowWidth } = Dimensions.get("window");
+
+type WatchScreenRouteProp = RouteProp<RootStackParamList, "WatchScreen">;
+type WatchScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "WatchScreen"
+>;
+
+type WatchScreenProps = {
+  route: WatchScreenRouteProp;
+  navigation: WatchScreenNavigationProp;
+};
 
 const LikeIcon = () => (
   <Ionicons name="heart-outline" size={24} color="white" />
@@ -28,22 +46,25 @@ const DislikeIcon = () => (
 
 const keyExtractor = (item: VideoCardProps) => item.slug;
 
-export default function WatchScreen() {
+// const isLoading = true;
+
+export default function WatchScreen({ route, navigation }: WatchScreenProps) {
   const orientation = useOrientation();
 
-  const handleRenderItem = ({ item }: { item: VideoCardProps }) => (
-    <VideoCard {...item} />
+  const { slug } = route.params;
+
+  const { data, isLoading, isError } = useAnimeVideo({ slug });
+
+  const handleItemPress = (item: VideoCardProperties) =>
+    navigation.replace("WatchScreen", { slug: item.slug });
+
+  const handleRenderItem = ({ item }: { item: VideoCardProperties }) => (
+    <VideoCard {...item} onPress={handleItemPress} />
   );
 
-  const handleRenderBottomSheet = () => (
-    <FlatList
-      horizontal
-      data={data.related}
-      renderItem={handleRenderItem}
-      keyExtractor={keyExtractor}
-      key="bottom-sheet-videos"
-    />
-  );
+  if (isLoading) {
+    return <Loader layout={[WatchScreenLoader()]} isLoading={isLoading} />;
+  }
 
   return (
     <View style={styles.container}>
@@ -51,13 +72,9 @@ export default function WatchScreen() {
 
       <View style={styles.playerContainer}>
         <Video
-          source={SAMPLE_VIDEO}
-          topTitleText="This is a really really long text, just want to sure if it shows correctly"
-          topDescriptionText="ABC"
+          source={data.source}
+          topTitleText={data.title}
           isTopTitleDisabled={orientation !== "LANDSCAPE"}
-          isBottomSheetDisabled={orientation !== "LANDSCAPE"}
-          BOTTOM_SHOW={windowHeight - CardHeight - 10}
-          renderBottomSheet={handleRenderBottomSheet}
         />
       </View>
       <View
@@ -97,7 +114,9 @@ export default function WatchScreen() {
                 <Label label="Tên khác" value={data.altTitle} />
                 <Label
                   label="Trọn bộ"
-                  value={data.playlists.map(({ name }) => name)}
+                  value={data.playlists.map(
+                    ({ name }: { name: string }) => name
+                  )}
                 />
                 <Label label="Ngày phát hành" value={data.releasedDate} />
                 <Label

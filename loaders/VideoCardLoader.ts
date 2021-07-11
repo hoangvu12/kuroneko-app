@@ -1,3 +1,4 @@
+import { ICustomViewStyle } from "react-native-skeleton-content/lib/Constants";
 import {
   CardPaddingBottom,
   CardPaddingRight,
@@ -9,7 +10,7 @@ import {
 } from "../components/VideoCard";
 import { randomKey } from "./Loader";
 
-const layout = () => ({
+const layout = (): ICustomViewStyle => ({
   key: randomKey("video-card-container"),
   width: CardWidth - CardPaddingRight,
   marginRight: CardPaddingRight,

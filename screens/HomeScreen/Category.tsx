@@ -12,7 +12,7 @@ export default function Category(props: CategoryProps) {
   const navigation = useNavigation();
 
   const handleItemPress = (params: VideoCardProperties) => {
-    navigation.navigate("WatchScreen", params);
+    navigation.navigate("WatchScreen", { slug: params.slug });
   };
 
   const handleRenderItem = ({ item }: { item: VideoCardProperties }) => (

@@ -52,7 +52,7 @@ export type VideoCardProperties = {
 
 export type RootStackParamList = {
   Root: undefined;
-  WatchScreen: undefined;
+  WatchScreen: { slug: VideoCardProperties["slug"] };
   NotFound: undefined;
 };
 
