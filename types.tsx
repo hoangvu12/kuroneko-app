@@ -5,6 +5,7 @@
 
 import { AVPlaybackStatus, Video } from "expo-av";
 import { TextStyle } from "react-native";
+import { IOnSizeParams } from "react-native-scalable-image";
 
 export type VideoButtonProps = {
   icon: JSX.Element;
@@ -23,8 +24,7 @@ export type VideoPlayerProps = {
   topTitleStyle?: TextStyle;
   topDescriptionText?: string;
   topDescriptionStyle?: TextStyle;
-  isSkipBackDisabled?: boolean;
-  isSkipForwardDisabled?: boolean;
+  isTopTitleDisabled?: boolean;
   onSkipBackPress?: VideoPlayerButtonPress;
   onPlayBackPress?: VideoPlayerButtonPress;
   onPlayPress?: VideoPlayerButtonPress;
@@ -39,11 +39,15 @@ export type CategoryProps = {
 };
 
 export type VideoCardProps = {
+  containerStyle?: StyleSheet;
+  onPress?: (params: VideoCardProperties) => void;
+} & VideoCardProperties;
+
+export type VideoCardProperties = {
   image: string;
   slug: string;
   title: string;
   studios: string[];
-  containerStyle?: StyleSheet;
 };
 
 export type RootStackParamList = {

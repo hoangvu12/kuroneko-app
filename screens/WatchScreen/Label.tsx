@@ -31,12 +31,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   labelText: {
-    fontSize: moderateScale(17),
+    fontSize: moderateScale(16),
     fontWeight: "bold",
     marginBottom: 5,
   },
   valueText: {
-    fontSize: moderateScale(17),
+    fontSize: moderateScale(14),
     fontWeight: "400",
     color: "gray",
   },

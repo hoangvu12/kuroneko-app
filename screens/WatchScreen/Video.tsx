@@ -1,24 +1,23 @@
+import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import Slider from "@react-native-community/slider";
+import { useNavigation } from "@react-navigation/native";
 import { AVPlaybackStatus, Video as ExpoVideo } from "expo-av";
+import * as ScreenOrientation from "expo-screen-orientation";
 import React, { useRef, useState } from "react";
 import {
-  StyleSheet,
-  View,
-  TouchableWithoutFeedback,
-  SafeAreaView,
   ActivityIndicator,
+  SafeAreaView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
-import { Ionicons, MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
-import Slider from "@react-native-community/slider";
-import * as ScreenOrientation from "expo-screen-orientation";
-import { useNavigation } from "@react-navigation/native";
-
 import { LightText, Text } from "../../components/Themed";
+import Colors from "../../constants/Colors";
+import useOrientation from "../../hooks/useOrientation";
 import { VideoPlayerButtonPress, VideoPlayerProps } from "../../types";
 import { parseTime } from "../../utils";
 import { moderateScale } from "../../utils/scale";
-import Colors from "../../constants/Colors";
 import VideoButton from "./VideoButton";
-import useOrientation from "../../hooks/useOrientation";
 
 const BackIcon = () => (
   <Ionicons name="ios-chevron-back-outline" size={30} color="white" />
@@ -78,6 +77,7 @@ function Video(props: VideoPlayerProps) {
     topTitleStyle,
     topDescriptionText,
     topDescriptionStyle,
+    isTopTitleDisabled = false,
     onPlayBackPress = DEFAULT_onPlayBackPress,
     onPlayPress = DEFAULT_onPlayPress,
     onPlayForwardPress = DEFAULT_onPlayForwardPress,
@@ -162,24 +162,26 @@ function Video(props: VideoPlayerProps) {
                     : navigation.goBack();
                 }}
               />
-              <View style={styles.leftTopTextContainer}>
-                {topTitleText && (
-                  <Text
-                    numberOfLines={1}
-                    style={[styles.leftTopTitle, topTitleStyle]}
-                  >
-                    {topTitleText}
-                  </Text>
-                )}
-                {topDescriptionText && (
-                  <LightText
-                    numberOfLines={1}
-                    style={[styles.leftTopDescription, topDescriptionStyle]}
-                  >
-                    {topDescriptionText}
-                  </LightText>
-                )}
-              </View>
+              {!isTopTitleDisabled && (
+                <View style={styles.leftTopTextContainer}>
+                  {topTitleText && (
+                    <Text
+                      numberOfLines={1}
+                      style={[styles.leftTopTitle, topTitleStyle]}
+                    >
+                      {topTitleText}
+                    </Text>
+                  )}
+                  {topDescriptionText && (
+                    <LightText
+                      numberOfLines={1}
+                      style={[styles.leftTopDescription, topDescriptionStyle]}
+                    >
+                      {topDescriptionText}
+                    </LightText>
+                  )}
+                </View>
+              )}
             </View>
           </View>
 
@@ -257,7 +259,7 @@ function Video(props: VideoPlayerProps) {
   );
 }
 
-export default React.memo(Video);
+export default Video;
 
 const styles = StyleSheet.create({
   container: {

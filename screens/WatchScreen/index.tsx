@@ -1,20 +1,20 @@
-import React from "react";
-import { StyleSheet, View, FlatList, Dimensions } from "react-native";
-import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { Dimensions, StyleSheet, View } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
 
 import { ScrollView, Text } from "../../components/Themed";
-import Video from "./Video";
-import useOrientation from "../../hooks/useOrientation";
-import Column from "./Column";
-
+import VideoCard, { CardHeight } from "../../components/VideoCard";
 import { data } from "../../data/video.json";
-import { moderateScale } from "../../utils/scale";
-import Label from "./Label";
+import useOrientation from "../../hooks/useOrientation";
 import { VideoCardProps } from "../../types";
-import VideoCard from "../../components/VideoCard";
+import { moderateScale } from "../../utils/scale";
+import Column from "./Column";
+import Label from "./Label";
+import Video from "./Video";
 
-const { width: windowWidth } = Dimensions.get("window");
+const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 const SAMPLE_VIDEO =
   "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
@@ -26,14 +26,24 @@ const DislikeIcon = () => (
   <Ionicons name="ios-heart-dislike-outline" size={24} color="white" />
 );
 
-const handleRenderItem = ({ item }: { item: VideoCardProps }) => (
-  <VideoCard {...item} />
-);
-
 const keyExtractor = (item: VideoCardProps) => item.slug;
 
 export default function WatchScreen() {
   const orientation = useOrientation();
+
+  const handleRenderItem = ({ item }: { item: VideoCardProps }) => (
+    <VideoCard {...item} />
+  );
+
+  const handleRenderBottomSheet = () => (
+    <FlatList
+      horizontal
+      data={data.related}
+      renderItem={handleRenderItem}
+      keyExtractor={keyExtractor}
+      key="bottom-sheet-videos"
+    />
+  );
 
   return (
     <View style={styles.container}>
@@ -44,6 +54,10 @@ export default function WatchScreen() {
           source={SAMPLE_VIDEO}
           topTitleText="This is a really really long text, just want to sure if it shows correctly"
           topDescriptionText="ABC"
+          isTopTitleDisabled={orientation !== "LANDSCAPE"}
+          isBottomSheetDisabled={orientation !== "LANDSCAPE"}
+          BOTTOM_SHOW={windowHeight - CardHeight - 10}
+          renderBottomSheet={handleRenderBottomSheet}
         />
       </View>
       <View
@@ -119,8 +133,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   playerContainer: {
-    width: "100%",
-    aspectRatio: 16 / 9,
+    flex: 1,
   },
   infoContainer: {
     flex: 2,
@@ -130,12 +143,12 @@ const styles = StyleSheet.create({
     maxWidth: windowWidth * 0.9,
   },
   title: {
-    fontSize: moderateScale(20),
+    fontSize: moderateScale(18),
     fontWeight: "bold",
     marginBottom: 10,
   },
   viewsText: {
-    fontSize: moderateScale(18),
+    fontSize: moderateScale(16),
     fontWeight: "400",
     color: "gray",
   },
@@ -147,7 +160,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   loveText: {
-    fontSize: moderateScale(18),
+    fontSize: moderateScale(16),
     fontWeight: "400",
     color: "gray",
     marginHorizontal: 5,
@@ -155,10 +168,12 @@ const styles = StyleSheet.create({
 
   likesContainer: {
     flexDirection: "row",
+    alignItems: "center",
   },
   dislikesContainer: {
     flexDirection: "row",
     marginHorizontal: 10,
+    alignItems: "center",
   },
   othersContainer: {
     marginVertical: 10,

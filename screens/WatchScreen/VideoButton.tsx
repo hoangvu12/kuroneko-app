@@ -6,7 +6,11 @@ export default function VideoButton(props: VideoButtonProps) {
   const { disabled = false, icon, onPress } = props;
 
   return (
-    <TouchableOpacity onPress={onPress} disabled={disabled}>
+    <TouchableOpacity
+      onPress={onPress}
+      disabled={disabled}
+      style={{ zIndex: 10 }}
+    >
       {icon}
     </TouchableOpacity>
   );

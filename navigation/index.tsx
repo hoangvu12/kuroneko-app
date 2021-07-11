@@ -57,7 +57,7 @@ function RootNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="WatchScreen"
+      initialRouteName="Root"
       screenOptions={({ navigation }) => ({
         headerStyle: {
           backgroundColor: colors.headerBackground,
