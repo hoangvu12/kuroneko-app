@@ -16,3 +16,7 @@ export function parseTime(millisec) {
   }
   return minutes + ":" + seconds;
 }
+
+export function random(min, max) {
+  return min + Math.random() * (max - min);
+}

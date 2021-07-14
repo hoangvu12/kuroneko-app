@@ -1,16 +1,14 @@
 import { Ionicons } from "@expo/vector-icons";
-import { RouteProp, useNavigation } from "@react-navigation/native";
+import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-
 import { ScrollView, Text } from "../../components/Themed";
-import VideoCard, { CardHeight } from "../../components/VideoCard";
-import { data } from "../../data/video.json";
+import VideoCard from "../../components/VideoCard";
 import useOrientation from "../../hooks/useOrientation";
-import Loader from "../../loaders/Loader";
+import WatchScreenLayout from "../../loaders/WatchScreenLayout";
 import {
   RootStackParamList,
   VideoCardProperties,
@@ -21,8 +19,6 @@ import Column from "./Column";
 import Label from "./Label";
 import useAnimeVideo from "./useAnimeVideo";
 import Video from "./Video";
-
-import WatchScreenLoader from "../../loaders/WatchScreenLoader";
 
 const { width: windowWidth } = Dimensions.get("window");
 
@@ -46,8 +42,6 @@ const DislikeIcon = () => (
 
 const keyExtractor = (item: VideoCardProps) => item.slug;
 
-// const isLoading = true;
-
 export default function WatchScreen({ route, navigation }: WatchScreenProps) {
   const orientation = useOrientation();
 
@@ -63,7 +57,7 @@ export default function WatchScreen({ route, navigation }: WatchScreenProps) {
   );
 
   if (isLoading) {
-    return <Loader layout={[WatchScreenLoader()]} isLoading={isLoading} />;
+    return <WatchScreenLayout />;
   }
 
   return (

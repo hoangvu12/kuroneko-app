@@ -17,7 +17,7 @@ export const CardPaddingBottom: number =
 export const ImageWidth: number = 300;
 export const ImageHeight: number = 425;
 
-export const CardWidth: number = width * 0.5 - CardPaddingRight;
+export const CardWidth: number = width * 0.5 - CardPaddingRight * 2;
 
 export const ImageRatio: number = CardWidth / ImageWidth;
 
