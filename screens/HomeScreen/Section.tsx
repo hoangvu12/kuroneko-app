@@ -1,23 +1,16 @@
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { Text, View } from "../../components/Themed";
 import VideoCard from "../../components/VideoCard";
-import { CategoryProps, VideoCardProperties } from "../../types";
+import { SectionProps, VideoCardProperties } from "../../types";
 import { moderateScale } from "../../utils/scale";
 
-export default function Category(props: CategoryProps) {
+const handleRenderItem = ({ item }: { item: VideoCardProperties }) => (
+  <VideoCard {...item} />
+);
+
+export default function Category(props: SectionProps) {
   const { title, updatedAt, videos } = props;
-
-  const navigation = useNavigation();
-
-  const handleItemPress = (params: VideoCardProperties) => {
-    navigation.navigate("WatchScreen", { slug: params.slug });
-  };
-
-  const handleRenderItem = ({ item }: { item: VideoCardProperties }) => (
-    <VideoCard {...item} onPress={handleItemPress} />
-  );
 
   return (
     <View style={styles.container}>

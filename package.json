@@ -17,6 +17,7 @@
     "@expo/vector-icons": "^12.0.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/slider": "3.0.3",
+    "@react-native-picker/picker": "1.16.1",
     "@react-navigation/bottom-tabs": "5.11.2",
     "@react-navigation/native": "~5.8.10",
     "@react-navigation/stack": "~5.12.8",
@@ -41,9 +42,9 @@
     "react-native-safe-area-context": "3.2.0",
     "react-native-scalable-image": "^1.1.0",
     "react-native-screens": "~3.4.0",
+    "react-native-skeleton-content": "https://github.com/hoangvu12/react-native-skeleton-content.git#master",
     "react-native-web": "~0.13.12",
-    "react-query": "^3.18.1",
-    "react-native-skeleton-content": "https://github.com/hoangvu12/react-native-skeleton-content.git#master"
+    "react-query": "^3.18.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Dimensions, StyleSheet, TouchableOpacity } from "react-native";
 import Image from "react-native-scalable-image";
@@ -17,7 +18,7 @@ export const CardPaddingBottom: number =
 export const ImageWidth: number = 300;
 export const ImageHeight: number = 425;
 
-export const CardWidth: number = width * 0.5 - CardPaddingRight * 2;
+export const CardWidth: number = width * 0.5 - CardPaddingRight;
 
 export const ImageRatio: number = CardWidth / ImageWidth;
 
@@ -30,9 +31,12 @@ export const CardHeight =
   TitleFontSize +
   StudiosFontSize;
 
-const DEFAULT_onPress = () => {};
-
 const VideoCard = (props: VideoCardProps) => {
+  const navigation = useNavigation();
+  const DEFAULT_onPress = () => {
+    navigation.navigate("WatchScreen", { slug: props.slug });
+  };
+
   const { image, title, studios, slug, onPress = DEFAULT_onPress } = props;
 
   const handlePress = () => {

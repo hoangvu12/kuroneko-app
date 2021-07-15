@@ -1,20 +1,22 @@
+import { Picker } from "@react-native-picker/picker";
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
-import ModalSelector from "react-native-modal-selector";
-import { View } from "../components/Themed";
-import VideoCard from "../components/VideoCard";
-import Colors from "../constants/Colors";
-import { data } from "../data/category.json";
-import useColorScheme from "../hooks/useColorScheme";
-import { VideoCardProps } from "../types";
+import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
+import { Text, View } from "../../components/Themed";
+import VideoCard from "../../components/VideoCard";
+import Colors from "../../constants/Colors";
+import useColorScheme from "../../hooks/useColorScheme";
+import CategoryLayout from "../../loaders/CategoryLayout";
+import { VideoCardProperties } from "../../types";
+import { moderateScale } from "../../utils/scale";
+import useCategory from "./useCategory";
 
-type Category = {
+type CategoryList = {
   name: string;
   slug: string;
-  tabLabel?: string;
-};
+}[];
 
-const CATEGORIES: Category[] = [
+const CATEGORIES: CategoryList = [
   { name: "3D", slug: "3d" },
   { name: "Ahegao", slug: "ahegao" },
   { name: "Anal", slug: "anal" },
@@ -85,35 +87,96 @@ const CATEGORIES: Category[] = [
   { name: "Yuri", slug: "yuri" },
 ];
 
+const handleRenderItem = ({ item }: { item: VideoCardProperties }) => (
+  <VideoCard {...item} />
+);
+
+const keyExtractor = (item: VideoCardProperties) => item.slug;
+
 export default function CategoryScreen() {
-  const [selectedCategory, setSelectedCategory] = useState(CATEGORIES[0]);
-  const [page, setPage] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState(CATEGORIES[0].slug);
+
+  const {
+    data,
+    isLoading,
+    isError,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = useCategory(selectedCategory);
 
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme];
 
+  if (isError)
+    return (
+      <View>
+        <Text>is error</Text>
+      </View>
+    );
+
+  const handleEndReached = () => {
+    if (isFetchingNextPage || isLoading || !hasNextPage) {
+      return;
+    }
+
+    fetchNextPage();
+  };
+
+  const list = data?.pages.map((page) => page.videos).flat();
+
   return (
     <View style={styles.container}>
-      <ModalSelector
-        data={CATEGORIES.map(({ slug, name }) => ({ key: slug, label: name }))}
-        cancelText="Hủy"
-        initValue={selectedCategory.name}
-        onChange={(option) => {
-          setSelectedCategory({ name: option.label, slug: option.key });
-        }}
-        style={{ backgroundColor: colors.background, paddingBottom: 10 }}
-        initValueTextStyle={{ color: colors.text }}
-      />
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={selectedCategory}
+          onValueChange={(itemValue) => setSelectedCategory(itemValue)}
+          style={[
+            styles.picker,
+            {
+              backgroundColor: colors.background,
+              color: colors.text,
+            },
+          ]}
+        >
+          {CATEGORIES.map((category) => (
+            <Picker.Item
+              key={category.slug}
+              label={category.name}
+              value={category.slug}
+            />
+          ))}
+        </Picker>
+      </View>
 
-      <FlatList
-        data={data.videos}
-        renderItem={({ item }: { item: VideoCardProps }) => (
-          <VideoCard {...item} />
+      <View style={styles.videosContainer}>
+        {isLoading ? (
+          <CategoryLayout />
+        ) : (
+          <FlatList
+            data={list}
+            renderItem={handleRenderItem}
+            key={selectedCategory}
+            numColumns={2}
+            keyExtractor={keyExtractor}
+            onEndReached={handleEndReached}
+            onEndReachedThreshold={0.05}
+            ListFooterComponentStyle={{ opacity: isFetchingNextPage ? 1 : 0 }}
+            ListFooterComponent={
+              <View
+                style={{
+                  padding: 10,
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ActivityIndicator />
+              </View>
+            }
+          />
         )}
-        key={selectedCategory.name}
-        numColumns={2}
-        keyExtractor={(item) => item.slug}
-      />
+      </View>
     </View>
   );
 }
@@ -122,5 +185,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+  },
+  pickerContainer: { flex: 1, marginBottom: 20 },
+  picker: {
+    height: "100%",
+    width: "100%",
+    fontSize: moderateScale(18),
+    paddingHorizontal: 10,
+    borderWidth: 0,
+    elevation: 0,
+  },
+  videosContainer: {
+    flex: 12,
   },
 });

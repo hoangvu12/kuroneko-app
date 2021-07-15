@@ -5,7 +5,6 @@
 
 import { AVPlaybackStatus, Video } from "expo-av";
 import { TextStyle } from "react-native";
-import { IOnSizeParams } from "react-native-scalable-image";
 
 export type VideoButtonProps = {
   icon: JSX.Element;
@@ -32,11 +31,42 @@ export type VideoPlayerProps = {
   onSkipForwardPress?: VideoPlayerButtonPress;
 };
 
-export type CategoryProps = {
+// "name": "3D",
+//     "description": "Hoạt hình 3D chân thật hơn, giống thật mà không phải là thật!",
+//     "total": 74,
+//     "videos": [
+//       {
+//         "image": "https://1.bp.blogspot.com/---nTM81Ylys/XEPnc_3J48I/AAAAAAAACkc/LzLzjfh8XoEaa7pOZg89scZrbVXox7nKgCLcBGAs/w200/Chikan-Shita-Joshi.jpg",
+//         "slug": "chikan-shita-joshi-2",
+//         "title": "Chikan Shita Joshi 2",
+//         "studios": ["SELFISH"]
+//       },
+//       {
+//         "image": "https://1.bp.blogspot.com/---nTM81Ylys/XEPnc_3J48I/AAAAAAAACkc/LzLzjfh8XoEaa7pOZg89scZrbVXox7nKgCLcBGAs/w200/Chikan-Shita-Joshi.jpg",
+//         "slug": "chikan-shita-joshi-1",
+//         "title": "Chikan Shita Joshi 1",
+//         "studios": ["SELFISH"]
+//       }
+//     ]
+export interface Category {
+  name: string;
+  description: string;
+  total: number;
+  videos: VideoCardProperties[];
+  pages: number;
+  nextPage: number;
+  page: number;
+}
+
+export interface Section {
   title: string;
   updatedAt: string;
+  videos: VideoCardProperties[];
+}
+
+export interface SectionProps extends Section {
   videos: VideoCardProps[];
-};
+}
 
 export type VideoCardProps = {
   containerStyle?: StyleSheet;

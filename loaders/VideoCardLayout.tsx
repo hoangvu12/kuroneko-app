@@ -10,8 +10,8 @@ import {
 } from "../components/VideoCard";
 import Loader from "./Loader";
 
-const VideoCardLayout = () => (
-  <Loader>
+const VideoCardLayout = ({ style }: { style?: ViewStyle }) => (
+  <Loader style={style}>
     <View style={styles.container}>
       <View style={styles.thumbnail} />
       <View style={styles.title} />
