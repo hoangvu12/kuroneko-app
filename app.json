@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "kuroneko-app",
-    "slug": "kuroneko-app",
+    "name": "Kuroneko",
+    "slug": "kuroneko",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,16 +15,14 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#000000"
       },
       "permissions": [
         "android.permission.RECORD_AUDIO",
@@ -35,9 +33,6 @@
     "web": {
       "favicon": "./assets/images/favicon.png"
     },
-    "plugins": [
-      "expo-av",
-      "expo-screen-orientation"
-    ]
+    "plugins": ["expo-av", "expo-screen-orientation"]
   }
 }
