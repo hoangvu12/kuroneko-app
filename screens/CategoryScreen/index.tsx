@@ -1,12 +1,11 @@
 import { Picker } from "@react-native-picker/picker";
-import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import { Text, View } from "../../components/Themed";
 import VideoCard from "../../components/VideoCard";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
-import CategoryLayout from "../../loaders/CategoryLayout";
+import ColumnVideoCardLayout from "../../loaders/ColumnVideoCardLayout";
 import { CategoryType, VideoCardProperties } from "../../types";
 import { moderateScale } from "../../utils/scale";
 import useCategory from "./useCategory";
@@ -146,7 +145,7 @@ export default function CategoryScreen() {
 
       <View style={styles.videosContainer}>
         {isLoading ? (
-          <CategoryLayout />
+          <ColumnVideoCardLayout />
         ) : (
           <FlatList
             data={list}

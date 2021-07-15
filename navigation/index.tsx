@@ -21,6 +21,7 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import useColorScheme from "../hooks/useColorScheme";
 import Colors from "../constants/Colors";
 import WatchScreen from "../screens/WatchScreen";
+import SearchScreen from "../screens/SearchScreen";
 
 export default function Navigation({
   colorScheme,
@@ -57,7 +58,7 @@ function RootNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="Root"
+      initialRouteName="SearchScreen"
       screenOptions={({ navigation }) => ({
         headerStyle: {
           backgroundColor: colors.headerBackground,
@@ -66,7 +67,7 @@ function RootNavigator() {
         headerRight: () => (
           <TouchableOpacity
             style={{ marginRight: 10 }}
-            onPress={() => navigation.navigate("Search")}
+            onPress={() => navigation.navigate("SearchScreen")}
           >
             <EvilIcons name="search" size={30} color={colors.tint} />
           </TouchableOpacity>
@@ -80,6 +81,7 @@ function RootNavigator() {
         component={WatchScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen
         name="NotFound"

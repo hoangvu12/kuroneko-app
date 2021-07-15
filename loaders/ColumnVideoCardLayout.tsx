@@ -5,7 +5,7 @@ import VideoCardLayout from "./VideoCardLayout";
 
 const arr = new Array(2).fill(null);
 
-export default function CategoryLayout() {
+export default function ColumnVideoCardLayout() {
   return (
     <Loader>
       {arr.map((_, i) => (
@@ -19,11 +19,11 @@ export default function CategoryLayout() {
   );
 }
 
-interface CategoryLayoutStyle {
+interface ColumnVideoCardLayoutStyle {
   [key: string]: ViewStyle;
 }
 
-const styles: CategoryLayoutStyle = {
+const styles: ColumnVideoCardLayoutStyle = {
   videosContainer: {
     flexDirection: "row",
     alignItems: "center",
