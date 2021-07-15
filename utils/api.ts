@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { Category, Section } from "../types";
+import { Category, Section, VideoInfo } from "../types";
 
 const BASE_URL = "https://kuroineko.glitch.me/api/v1/anime";
 
@@ -19,7 +19,7 @@ export const getCategory = async (categorySlug: string, page: number = 1) => {
 export const getVideo = async (animeSlug: string) => {
   const URL = `${BASE_URL}/${animeSlug}`;
 
-  return doRequest(URL);
+  return doRequest<VideoInfo>(URL);
 };
 
 const doRequest = async <T>(URL: string): Promise<T> => {

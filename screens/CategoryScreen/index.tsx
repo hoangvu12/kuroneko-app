@@ -7,16 +7,11 @@ import VideoCard from "../../components/VideoCard";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import CategoryLayout from "../../loaders/CategoryLayout";
-import { VideoCardProperties } from "../../types";
+import { CategoryType, VideoCardProperties } from "../../types";
 import { moderateScale } from "../../utils/scale";
 import useCategory from "./useCategory";
 
-type CategoryList = {
-  name: string;
-  slug: string;
-}[];
-
-const CATEGORIES: CategoryList = [
+const CATEGORIES: CategoryType[] = [
   { name: "3D", slug: "3d" },
   { name: "Ahegao", slug: "ahegao" },
   { name: "Anal", slug: "anal" },

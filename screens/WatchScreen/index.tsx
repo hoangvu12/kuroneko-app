@@ -66,8 +66,8 @@ export default function WatchScreen({ route, navigation }: WatchScreenProps) {
 
       <View style={styles.playerContainer}>
         <Video
-          source={data.source}
-          topTitleText={data.title}
+          source={data!.source}
+          topTitleText={data!.title}
           isTopTitleDisabled={orientation !== "LANDSCAPE"}
         />
       </View>
@@ -80,42 +80,46 @@ export default function WatchScreen({ route, navigation }: WatchScreenProps) {
         <ScrollView horizontal style={{ flex: 1 }}>
           <Column as={ScrollView} style={styles.infoColumn}>
             <Text numberOfLines={2} style={styles.title}>
-              {data.title}
+              {data!.title}
             </Text>
             <View style={styles.statisticsContainer}>
-              <Text style={styles.viewsText}>{data.views}</Text>
+              <Text style={styles.viewsText}>{data!.views}</Text>
               <View style={styles.lovesContainer}>
                 <View style={styles.likesContainer}>
                   <LikeIcon />
-                  <Text style={styles.loveText}>{data.likes}</Text>
+                  <Text style={styles.loveText}>{data!.likes}</Text>
                 </View>
                 <View style={styles.dislikesContainer}>
                   <DislikeIcon />
-                  <Text style={styles.loveText}>{data.dislikes}</Text>
+                  <Text style={styles.loveText}>{data!.dislikes}</Text>
                 </View>
               </View>
             </View>
             <View style={styles.othersContainer}>
               <Label.Container inline>
-                <Label label="Hãng" value={data.studios} />
+                <Label label="Hãng" value={data!.studios} />
                 <Label
-                  value={data.censorship}
+                  value={data!.censorship}
                   valueStyle={{ color: "#F87171", fontWeight: "bold" }}
                 />
               </Label.Container>
 
               <Label.Container>
-                <Label label="Tên khác" value={data.altTitle} />
+                <Label label="Tên khác" value={data!.altTitle} />
+                <Label
+                  label="Thể loại"
+                  value={data!.categories.map(({ name }) => name)}
+                />
                 <Label
                   label="Trọn bộ"
-                  value={data.playlists.map(
+                  value={data!.playlists.map(
                     ({ name }: { name: string }) => name
                   )}
                 />
-                <Label label="Ngày phát hành" value={data.releasedDate} />
+                <Label label="Ngày phát hành" value={data!.releasedDate} />
                 <Label
                   label="Nội dung"
-                  value={data.description}
+                  value={data!.description}
                   valueStyle={{ textAlign: "justify" }}
                 />
               </Label.Container>
@@ -128,7 +132,7 @@ export default function WatchScreen({ route, navigation }: WatchScreenProps) {
             </Text>
 
             <FlatList
-              data={data.related}
+              data={data!.related}
               renderItem={handleRenderItem}
               numColumns={2}
               keyExtractor={keyExtractor}
