@@ -50,6 +50,7 @@ export default function SearchScreen() {
       >
         <TextInput
           placeholder={PLACEHOLDER}
+          placeholderTextColor={colors.text}
           style={[styles.input, { color: colors.text }]}
           value={keyword}
           onChangeText={onChange}

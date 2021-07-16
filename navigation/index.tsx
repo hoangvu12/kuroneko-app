@@ -58,7 +58,7 @@ function RootNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="SearchScreen"
+      initialRouteName="Root"
       screenOptions={({ navigation }) => ({
         headerStyle: {
           backgroundColor: colors.headerBackground,

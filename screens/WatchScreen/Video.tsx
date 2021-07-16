@@ -2,8 +2,9 @@ import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
 import { useNavigation } from "@react-navigation/native";
 import { AVPlaybackStatus, Video as ExpoVideo } from "expo-av";
+import { activateKeepAwake, deactivateKeepAwake } from "expo-keep-awake";
 import * as ScreenOrientation from "expo-screen-orientation";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   SafeAreaView,
@@ -90,6 +91,14 @@ function Video(props: VideoPlayerProps) {
   const [videoStatus, setVideoStatus] =
     useState<AVPlaybackStatus>(DEFAULT_videoStatus);
   const [showControls, setShowControls] = useState<Boolean>(true);
+
+  useEffect(() => {
+    if (orientation === "LANDSCAPE") return activateKeepAwake();
+
+    deactivateKeepAwake();
+
+    return () => deactivateKeepAwake();
+  }, [orientation]);
 
   const handleSlideDrag = async (value: number): Promise<void> => {
     await videoRef.current?.setPositionAsync(value);
@@ -264,7 +273,6 @@ export default Video;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // position: "relative",
   },
   player: {
     width: "100%",
